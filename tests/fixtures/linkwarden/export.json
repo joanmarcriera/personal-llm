@@ -1,0 +1,13 @@
+{
+  "links": [
+    {
+      "name": "Battery Optimisation",
+      "url": "https://example.com/battery",
+      "description": "Notes on tariff arbitrage",
+      "textContent": "Battery arbitrage depends on import tariffs, inverter limits, export rates, and cycle degradation.",
+      "tags": ["energy", "finance"],
+      "collection": "Research"
+    }
+  ]
+}
+

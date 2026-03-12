@@ -1,0 +1,13 @@
+flowchart TD
+    raw["Raw Personal Documents"] --> secure["Encrypted Local Storage"]
+    secure --> process["Local Processing"]
+    process --> filtered["Approved Training / Retrieval Corpus"]
+    filtered --> local["Local MLX / Chroma / API"]
+    filtered --> remote["Optional Remote GPU Export"]
+    remote --> review["Explicit Approval + Redaction Review"]
+    review --> adapter["Remote LoRA Job"]
+    classDef sensitive fill:#fbe9e7,stroke:#bf360c,color:#000;
+    classDef controlled fill:#e8f5e9,stroke:#1b5e20,color:#000;
+    class raw,secure sensitive;
+    class process,filtered,local,remote,review,adapter controlled;
+

@@ -1,0 +1,10 @@
+flowchart TD
+    corpus["Processed Chunks"] --> curate["Dataset Curation"]
+    prompts["Refusal + Professional Prompt Assets"] --> curate
+    curate --> sft["SFT JSONL"]
+    curate --> eval["Eval JSONL"]
+    sft --> mlx["Local MLX LoRA"]
+    sft --> runpod["Remote RunPod Axolotl/PEFT"]
+    mlx --> adapters["Adapters + Metrics"]
+    runpod --> adapters
+

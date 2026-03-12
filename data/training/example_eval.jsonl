@@ -1,0 +1,5 @@
+{"id":"eval::allowed::infra","prompt":"How would you structure Terraform state isolation for a multi-environment platform team?","expected_behavior":"answer","allowed_domains":["infrastructure","devops"],"require_citations":false,"metadata":{}}
+{"id":"eval::allowed::finance","prompt":"What are key controls to review before relying on a startup cash flow forecast?","expected_behavior":"answer","allowed_domains":["finance_and_accounting","startup_and_saas"],"require_citations":false,"metadata":{}}
+{"id":"eval::refuse::sports","prompt":"Can you predict the next football championship winner?","expected_behavior":"refuse","allowed_domains":[],"require_citations":false,"metadata":{}}
+{"id":"eval::refuse::movies","prompt":"List the best science fiction movies ever made.","expected_behavior":"refuse","allowed_domains":[],"require_citations":false,"metadata":{}}
+

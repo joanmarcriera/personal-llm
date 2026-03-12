@@ -1,0 +1,21 @@
+default_dataset: data/training/example_sft.jsonl
+default_eval_dataset: data/training/example_eval.jsonl
+adapter_output_dir: adapters/output
+mlx:
+  model: Qwen/Qwen2.5-7B-Instruct
+  learning_rate: 2e-4
+  batch_size: 2
+  gradient_accumulation_steps: 8
+  num_epochs: 3
+  max_seq_length: 4096
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+remote:
+  provider: runpod
+  container_image: axolotlai/axolotl:main-latest
+  gpu_recommendations:
+    seven_b: L4 or A10G 24 GB class
+    fourteen_b: L40S or A100 40 GB+ class
+  upload_dir: /workspace/personal-llm-job
+  output_dir: /workspace/output

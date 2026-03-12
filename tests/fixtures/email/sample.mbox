@@ -1,0 +1,7 @@
+From nobody@example.com Fri Jan  1 00:00:00 2026
+Subject: Platform incident review
+From: ops@example.com
+To: engineering@example.com
+
+We rolled back an ingress change after increased 502 rates. Cert rotation and Argo CD sync health were reviewed.
+

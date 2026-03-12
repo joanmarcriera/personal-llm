@@ -1,0 +1,18 @@
+.md-main__inner {
+  max-width: 72rem;
+}
+
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.md-typeset table:not([class]) {
+  display: table;
+  overflow: auto;
+}
+
+.md-typeset code {
+  word-break: break-word;
+}

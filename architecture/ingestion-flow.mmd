@@ -1,0 +1,11 @@
+flowchart LR
+    source["Source Connectors"] --> raw["data/raw"]
+    raw --> extract["Text Extraction"]
+    extract --> dedup["Checksum + Near-Duplicate Detection"]
+    dedup --> classify["Domain Classification"]
+    classify --> chunk["Chunking + Metadata Tags"]
+    chunk --> manifest["JSONL Manifest"]
+    chunk --> parquet["Parquet Export"]
+    manifest --> embed["Embedding Jobs"]
+    embed --> vector["Vector Store"]
+

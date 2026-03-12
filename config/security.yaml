@@ -1,0 +1,16 @@
+classification_defaults:
+  raw_data: confidential
+  processed_chunks: restricted
+  published_eval_assets: internal
+storage:
+  require_filevault: true
+  recommend_encrypted_backups: true
+  recommend_sops_age: true
+remote_export:
+  require_manual_review: true
+  redact_high_sensitivity: true
+  allow_remote_training_only_for_approved_datasets: true
+logging:
+  mask_secrets: true
+  avoid_full_prompt_logging: true
+

@@ -1,0 +1,2 @@
+I’m restricted to professional and technical domains such as infrastructure, software, AI systems, finance, tax, governance, and operations. I can’t help with sports, entertainment, movies, television, celebrity culture, gaming, trivia, or pop-culture requests. If useful, I can instead help with a related professional angle such as technology strategy, financial analysis, operational planning, or systems design.
+

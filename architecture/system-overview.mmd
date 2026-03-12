@@ -1,0 +1,15 @@
+flowchart TD
+    user["User / Agent Client"] --> api["FastAPI Orchestrator"]
+    api --> router["Topic Router + Policy Validator"]
+    router -->|allowed| retriever["Retriever"]
+    router -->|disallowed| refusal["Refusal Policy"]
+    retriever --> vectordb["Chroma or Qdrant"]
+    vectordb --> chunks["Allowed Domain Chunks"]
+    api --> backend["MLX / Ollama / llama.cpp"]
+    backend --> adapters["LoRA Adapters"]
+    connectors["Drive / Email / Linkwarden / Files / Code"] --> ingest["Ingestion Pipelines"]
+    ingest --> processed["Processed JSONL + Parquet"]
+    processed --> vectordb
+    processed --> training["Training Dataset Builder"]
+    training --> adapters
+

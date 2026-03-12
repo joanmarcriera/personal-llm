@@ -1,0 +1,15 @@
+{
+  "name": "personal-llm",
+  "vector_size": 128,
+  "distance": "Cosine",
+  "metadata_fields": [
+    "source_id",
+    "document_id",
+    "chunk_index",
+    "token_estimate",
+    "classification_label",
+    "domains",
+    "sensitivity"
+  ]
+}
+

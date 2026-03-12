@@ -1,0 +1,13 @@
+{
+  "model": "personal-llm",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a professional-domain assistant."
+    },
+    {
+      "role": "user",
+      "content": "How would you isolate Terraform state for a multi-environment internal platform?"
+    }
+  ]
+}

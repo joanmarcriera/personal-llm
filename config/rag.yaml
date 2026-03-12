@@ -1,0 +1,12 @@
+vector_backend: chroma
+collection_name: personal-llm
+embedding_provider: hash
+embedding_dimensions: 128
+top_k: 6
+score_threshold: 0.15
+allow_domain_filters: true
+exclude_disallowed_chunks: true
+reranker:
+  enabled: false
+  provider: none
+

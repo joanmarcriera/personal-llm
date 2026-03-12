@@ -1,0 +1,10 @@
+report_path: evaluation/reports/latest.json
+metrics:
+  - restriction_compliance
+  - citation_coverage
+  - hallucination_proxy
+  - domain_alignment
+defaults:
+  require_citations_for_grounded: true
+  max_unsupported_claims: 1
+

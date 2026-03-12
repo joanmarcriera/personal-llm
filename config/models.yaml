@@ -1,0 +1,51 @@
+default_model_profile: qwen2.5-7b-instruct
+backend_selection: profile
+profiles:
+  qwen2.5-3b-instruct:
+    family: qwen
+    model_name: Qwen/Qwen2.5-3B-Instruct
+    backend: mlx
+    context_window: 32768
+    quantization: q4_k_m
+    parameter_count: 3000000000
+    prompt_style: chatml
+  qwen2.5-7b-instruct:
+    family: qwen
+    model_name: Qwen/Qwen2.5-7B-Instruct
+    backend: mlx
+    context_window: 32768
+    quantization: q4_k_m
+    parameter_count: 7000000000
+    prompt_style: chatml
+  qwen2.5-14b-instruct:
+    family: qwen
+    model_name: Qwen2.5-14B-Instruct
+    backend: ollama
+    context_window: 32768
+    quantization: q4_k_m
+    parameter_count: 14000000000
+    prompt_style: chatml
+  llama3.1-8b-instruct:
+    family: llama
+    model_name: Llama-3.1-8B-Instruct
+    backend: ollama
+    context_window: 8192
+    quantization: q4_k_m
+    parameter_count: 8000000000
+    prompt_style: llama3
+  mistral-7b-instruct:
+    family: mistral
+    model_name: Mistral-7B-Instruct-v0.3
+    backend: llama_cpp
+    context_window: 8192
+    quantization: q4_k_m
+    parameter_count: 7000000000
+    prompt_style: mistral
+  phi-3-medium:
+    family: phi
+    model_name: Phi-3-medium-128k-instruct
+    backend: ollama
+    context_window: 16384
+    quantization: q4_k_m
+    parameter_count: 14000000000
+    prompt_style: phi

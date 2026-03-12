@@ -1,0 +1,34 @@
+default_profile: standard
+profiles:
+  strict:
+    description: Maximum restriction for professional-only assistants.
+    system_prompt: system_professional_strict.md
+    refusal_prompt: refusal_redirect.md
+    enable_runtime_policy: true
+    refuse_mixed_queries: true
+    exclude_disallowed_retrieval: true
+    include_refusal_examples: true
+  standard:
+    description: Recommended default for most users.
+    system_prompt: system_professional.md
+    refusal_prompt: refusal_redirect.md
+    enable_runtime_policy: true
+    refuse_mixed_queries: false
+    exclude_disallowed_retrieval: true
+    include_refusal_examples: true
+  relaxed:
+    description: Keeps professional steering but is less aggressive.
+    system_prompt: system_professional_relaxed.md
+    refusal_prompt: refusal_redirect_relaxed.md
+    enable_runtime_policy: true
+    refuse_mixed_queries: false
+    exclude_disallowed_retrieval: false
+    include_refusal_examples: false
+  original_model:
+    description: Use the original model behavior with minimal repository guardrails.
+    system_prompt: system_original_model.md
+    refusal_prompt: refusal_disabled.md
+    enable_runtime_policy: false
+    refuse_mixed_queries: false
+    exclude_disallowed_retrieval: false
+    include_refusal_examples: false

@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant C as Client
+    participant A as API
+    participant P as Policy
+    participant R as Retriever
+    participant V as Vector DB
+    participant M as Model Backend
+    C->>A: chat.completions
+    A->>P: classify query
+    alt disallowed
+        P-->>A: refuse + redirect
+        A-->>C: refusal response
+    else allowed
+        A->>R: retrieve context
+        R->>V: semantic search + metadata filter
+        V-->>R: top chunks
+        R-->>A: citations + context
+        A->>M: final prompt
+        M-->>A: answer
+        A->>P: validate output
+        A-->>C: grounded response
+    end
+

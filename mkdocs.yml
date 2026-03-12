@@ -1,0 +1,141 @@
+site_name: personal-llm
+site_description: Personal professional-domain LLM repository optimized for Apple Silicon with LoRA, RAG, and domain restriction.
+docs_dir: site-docs
+site_dir: site
+strict: true
+use_directory_urls: true
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_css:
+  - docs/assets/site.css
+
+extra_javascript:
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
+  - docs/assets/mermaid-init.js
+
+exclude_docs: |
+  .git/
+  .github/
+  .venv/
+  .uv-cache/
+  .mypy_cache/
+  .pytest_cache/
+  .ruff_cache/
+  __pycache__/
+  build/
+  dist/
+  site/
+  tests/fixtures/**/*.mbox
+  tests/fixtures/**/*.csv
+  tests/fixtures/**/*.json
+  data/raw/**
+  data/processed/**
+  adapters/output/**
+  models/cache/**
+  secrets/**
+
+nav:
+  - Home: index.md
+  - Start Here:
+      - Stack Primer: docs/00_stack_primer.md
+      - Installation: docs/01_installation.md
+      - Data Ingestion: docs/02_data_ingestion.md
+      - Training: docs/03_training.md
+      - RAG Setup: docs/04_rag_setup.md
+      - Model Serving: docs/05_model_serving.md
+      - External Training: docs/06_external_training.md
+      - Evaluation: docs/07_evaluation.md
+      - Maintenance: docs/08_maintenance.md
+      - Workflow Map: docs/14_workflow_map.md
+  - Personalization:
+      - Guardrails: docs/09_guardrails.md
+      - Dataset Design Examples: docs/10_dataset_design_examples.md
+      - Training Example Library: data/training/examples/README.md
+      - Personal Knowledge: docs/11_personal_knowledge.md
+      - Guardrail Boundary Cases: docs/12_guardrail_boundary_cases.md
+      - Data Quality: docs/13_data_quality.md
+      - First Training Run: docs/15_first_training_run.md
+      - Guardrail Matrix: docs/16_guardrail_matrix.md
+      - Reading Evaluation Results: docs/17_reading_evaluation_results.md
+      - Improvement and Degradation: docs/18_improvement_and_degradation.md
+  - Architecture:
+      - Overview and Diagrams: architecture/overview.md
+  - Knowledge Base:
+      - Knowledge Home: knowledge/README.md
+      - Persona: knowledge/persona.md
+      - Domain Notes:
+          - Overview: knowledge/domains/README.md
+          - Infrastructure and Platform: knowledge/domains/01_infrastructure_platform.md
+          - Software AI and Automation: knowledge/domains/02_software_ai_automation.md
+          - Finance Tax and Investment: knowledge/domains/03_finance_tax_investment.md
+          - Operations Governance and Security: knowledge/domains/04_operations_governance_security.md
+          - Energy and Productivity: knowledge/domains/05_energy_productivity.md
+      - Domain Template: knowledge/templates/domain_knowledge_template.md
+      - Persona Template: knowledge/templates/persona_template.md
+      - Snapshot Notes: knowledge/snapshots/README.md
+  - Runtime Assets:
+      - Prompt System: prompts/README.md
+      - Professional Prompt: prompts/system_professional.md
+      - Strict Prompt: prompts/system_professional_strict.md
+      - Relaxed Prompt: prompts/system_professional_relaxed.md
+      - Original Model Prompt: prompts/system_original_model.md
+      - Refusal Redirect: prompts/refusal_redirect.md
+      - Relaxed Refusal: prompts/refusal_redirect_relaxed.md
+      - Refusal Disabled: prompts/refusal_disabled.md
+      - Topic Router: prompts/topic_router.md
+      - Legal and Finance Disclaimer: prompts/legal_finance_disclaimer.md
+  - Evaluation Assets:
+      - Evaluation Home: evaluation/README.md
+      - Case Suites: evaluation/cases/README.md
+      - Reports:
+          - Reports Home: evaluation/reports/README.md
+          - Baseline Template: evaluation/reports/baseline_template.md
+          - Guardrail Matrix Example: evaluation/reports/guardrail_matrix_qwen2.5-3b-instruct.md
+          - Improvement Example: evaluation/reports/example_improvement_matrix_3b_original_vs_matrix_3b_standard.md
+          - Degradation Example: evaluation/reports/example_degradation_matrix_3b_standard_vs_matrix_3b_strict.md
+  - Reference:
+      - Repository Map: docs/repository_map.md
+      - Publishing on GitHub Pages: docs/19_github_pages.md
+      - Connectors: connectors/README.md
+      - Pipelines: pipelines/README.md
+      - Models: models/README.md
+      - Base Model Notes: models/base-models.md
+      - RAG: rag/README.md
+      - Vector DB: vector-db/README.md
+      - Adapters: adapters/README.md
+      - Deployment: deployment/README.md
+      - Smoke Tests: tests/smoke/README.md

@@ -1,0 +1,17 @@
+base_model: Qwen/Qwen2.5-7B-Instruct
+load_in_4bit: true
+adapter: qlora
+sequence_len: 4096
+micro_batch_size: 2
+gradient_accumulation_steps: 8
+num_epochs: 3
+learning_rate: 0.0002
+output_dir: /workspace/output/qwen2.5-7b-lora
+chat_template: chatml
+datasets:
+  - path: /workspace/personal-llm-job/dataset.jsonl
+    type: chat_template
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+

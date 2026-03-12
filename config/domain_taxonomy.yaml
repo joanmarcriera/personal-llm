@@ -1,0 +1,63 @@
+allowed_domains:
+  infrastructure:
+    keywords: [infrastructure, kubernetes, terraform, ansible, vmware, storage, networking, dns, observability]
+  devops:
+    keywords: [devops, ci, cd, pipeline, automation, deployment, container, build, gitops]
+  cloud_architecture:
+    keywords: [aws, azure, gcp, cloud, vpc, subnet, landing zone, workload, architecture]
+  distributed_systems:
+    keywords: [distributed, consensus, replication, queue, streaming, kafka, fault tolerance, latency]
+  platform_engineering:
+    keywords: [platform, developer portal, backstage, internal developer platform, golden path]
+  identity_management:
+    keywords: [identity, sso, oidc, oauth, scim, authentication, authorization, iam]
+  automation_engineering:
+    keywords: [automation, workflow, integration, orchestration, n8n, scripting, incident automation]
+  ai_systems:
+    keywords: [llm, rag, fine-tuning, agent, vector database, prompt, inference, evaluation]
+  software_engineering:
+    keywords: [software, python, typescript, api, microservice, testing, refactor, architecture]
+  self_hosted_systems:
+    keywords: [self-hosted, homelab, proxmox, docker, reverse proxy, uptime, backup]
+  tax_law_and_corporate_taxation:
+    keywords: [tax, corporation tax, vat, payroll, hmrc, transfer pricing, compliance]
+  finance_and_accounting:
+    keywords: [finance, accounting, ledger, p&l, balance sheet, cash flow, bookkeeping]
+  financial_modelling:
+    keywords: [financial model, forecast, scenario analysis, sensitivity analysis, valuation]
+  startup_and_saas:
+    keywords: [startup, saas, churn, retention, mrr, arr, acquisition, runway]
+  energy_optimization:
+    keywords: [solar, battery, energy tariff, optimization, load shifting, pv, inverter]
+  investment_analysis:
+    keywords: [investment, discounted cash flow, equity, portfolio, margin of safety]
+  productivity_systems:
+    keywords: [productivity, notes, workflow, task system, operating cadence]
+  systems_architecture:
+    keywords: [system design, architecture, reliability, scalability, governance]
+  operational_governance:
+    keywords: [policy, risk, control, audit, governance, operating model]
+  data_engineering:
+    keywords: [etl, data pipeline, warehouse, lakehouse, dbt, schema, ingestion]
+  cybersecurity_operations:
+    keywords: [siem, soc, detection, incident response, phishing, vulnerability, security operations]
+disallowed_domains:
+  sports:
+    keywords: [sport, sports, football, soccer, rugby, tennis, basketball, baseball]
+  entertainment:
+    keywords: [entertainment, showbiz, celebrity, gossip, red carpet]
+  television:
+    keywords: [television, tv series, sitcom, episode recap]
+  movies:
+    keywords: [movie, film, actor, actress, cinema, box office]
+  historical_storytelling:
+    keywords: [historical story, ancient battle, medieval tale, lore]
+  trivia:
+    keywords: [trivia, fun fact, quiz, riddle]
+  gaming:
+    keywords: [video game, gaming, console, walkthrough, speedrun]
+  pop_culture:
+    keywords: [meme, fandom, influencer, pop culture]
+mixed_domain_threshold: 0.15
+disallowed_priority_multiplier: 1.4
+

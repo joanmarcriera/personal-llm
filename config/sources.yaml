@@ -1,0 +1,52 @@
+defaults:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  recurse: true
+  include_extensions:
+    - .md
+    - .markdown
+    - .txt
+    - .pdf
+    - .docx
+    - .html
+    - .htm
+    - .eml
+    - .mbox
+    - .xlsx
+    - .csv
+connectors:
+  local_files:
+    enabled: true
+    # This can point at a normal local folder or an NFS mount, for example:
+    # - /Volumes/KnowledgeShare
+    # - /Volumes/KnowledgeShare/architecture
+    paths:
+      - tests/fixtures/markdown
+      - tests/fixtures/pdf
+      - tests/fixtures/docx
+      - tests/fixtures/html
+      - tests/fixtures/spreadsheets
+      # - /Volumes/KnowledgeShare
+  code_repositories:
+    enabled: true
+    paths:
+      - tests/fixtures/code
+  google_drive:
+    enabled: false
+    root_folder_id: null
+    export_mimetypes:
+      application/vnd.google-apps.document: text/plain
+      application/vnd.google-apps.spreadsheet: text/csv
+  email:
+    enabled: true
+    # Recommended simple path: use mbox exports here, or put .eml files under local_files.
+    mbox_paths:
+      - tests/fixtures/email/sample.mbox
+      # - /Volumes/KnowledgeShare/email/archive.mbox
+    gmail_takeout_paths: []
+    imap:
+      enabled: false
+      folder: INBOX
+  linkwarden:
+    enabled: true
+    export_path: tests/fixtures/linkwarden/export.json
