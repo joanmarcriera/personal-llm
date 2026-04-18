@@ -1,0 +1,242 @@
+<div class="landing" data-site="llm">
+
+<header class="chrome-top">
+    <div class="inner">
+        <a class="brand" href="https://riera.co.uk/">
+            <span class="mark">JR</span>
+            <span>llm.riera.co.uk</span>
+            <span class="sub">/ lab</span>
+        </a>
+        <nav class="chrome-nav">
+            <a href="#shape">Shape</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#docs">Docs</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <button class="switch-btn" id="switcher-open" aria-label="Open site index">
+            <span>Index</span>
+            <span class="kbd">⌘K</span>
+        </button>
+    </div>
+</header>
+
+<div class="switcher" id="switcher" role="dialog" aria-modal="true" aria-label="Portfolio site index">
+    <div class="switcher-card">
+        <div class="switcher-head">
+            <span class="title">Portfolio index — jump to site</span>
+            <button class="close" id="switcher-close" aria-label="Close">Esc</button>
+        </div>
+        <div class="switcher-list" id="switcher-list"></div>
+    </div>
+</div>
+
+<main>
+
+    <section class="sub-hero">
+        <div class="container">
+            <div class="sub-head-grid">
+                <span class="label">llm.riera.co.uk</span>
+                <h1>Domain-specialised, local-first LLM scaffolding with strict scope.</h1>
+            </div>
+            <div class="meta-grid">
+                <span class="label">Lab</span>
+                <p class="deck">A small, reproducible path from personal knowledge to a private, topic-restricted model. Ingest, tag, index, fine-tune with LoRA, serve through an OpenAI-compatible API. Optimised for Apple Silicon; optional upgrade to Ollama, Qdrant, or RunPod when the local path is no longer enough.</p>
+                <div class="signal-list">
+                    <div class="signal-row"><span class="k">Runtime</span><span>FastAPI · MLX · Chroma</span></div>
+                    <div class="signal-row"><span class="k">Upgrade</span><span>Ollama · Qdrant · llama.cpp</span></div>
+                    <div class="signal-row"><span class="k">Training</span><span>LoRA local · Axolotl remote</span></div>
+                    <div class="signal-row"><span class="k">Source</span><span><a href="https://github.com/joanmarcriera/personal-llm" target="_blank" rel="noreferrer" style="border-bottom: 1px solid var(--line-2); color: var(--ink);">github.com/joanmarcriera/personal-llm →</a></span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="shape">
+        <div class="container">
+            <div class="sec-head">
+                <span class="label">§ 01 · Shape</span>
+                <h2 class="sec-title">A narrow model that knows where it ends.</h2>
+            </div>
+            <div class="panel-row">
+                <div class="panel">
+                    <span class="tag">Scope</span>
+                    <h3>Professional domains only</h3>
+                    <p>Infrastructure, DevOps, cloud, finance, tax, software, governance, AI systems. Off-topic requests — sports, entertainment, celebrity, trivia — are refused and redirected at the prompt and retrieval layer.</p>
+                </div>
+                <div class="panel">
+                    <span class="tag">Inputs</span>
+                    <h3>Personal knowledge, explicit</h3>
+                    <p>Google Drive, NFS shares, local files, email archives, Linkwarden, spreadsheets, PDFs, Markdown, code. Raw source and curated opinion are kept separate so personal defaults become explicit training inputs.</p>
+                </div>
+                <div class="panel">
+                    <span class="tag">Local-first</span>
+                    <h3>Runs on a laptop</h3>
+                    <p>FastAPI + MLX + Chroma is the easy starting path on an M-series Mac. Nothing leaves the machine unless an optional remote adapter is enabled deliberately.</p>
+                </div>
+                <div class="panel">
+                    <span class="tag">Upgrade path</span>
+                    <h3>Scales when it has to</h3>
+                    <p>Same code swaps in Ollama, Qdrant, or llama.cpp behind the FastAPI layer. LoRA training moves from MLX locally to Axolotl on RunPod when the adapter gets big.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="architecture">
+        <div class="container">
+            <div class="sec-head">
+                <span class="label">§ 02 · Architecture</span>
+                <h2 class="sec-title">Six layers, every one replaceable.</h2>
+            </div>
+            <div class="kbd-grid">
+                <div class="kbd-card"><code>01 · ingest</code><p>Extract from Drive, NFS, email, Linkwarden, code, docs. Normalised JSONL + Parquet with provenance preserved.</p></div>
+                <div class="kbd-card"><code>02 · classify</code><p>Deduplicate, tag by domain, enforce the topic allow-list. Rejected material never reaches the training set.</p></div>
+                <div class="kbd-card"><code>03 · index</code><p>Chroma locally for the first run, Qdrant when the corpus stops fitting in memory. Embeddings recomputed on source change.</p></div>
+                <div class="kbd-card"><code>04 · train</code><p>LoRA on Apple Silicon via MLX for the first adapter. Axolotl on RunPod when the adapter needs a bigger base model.</p></div>
+                <div class="kbd-card"><code>05 · serve</code><p>FastAPI orchestrator with an OpenAI-compatible endpoint, retrieval, citations, topic filtering, and adapter switching.</p></div>
+                <div class="kbd-card"><code>06 · evaluate</code><p>Guardrail matrix, boundary-case suites, improvement/degradation reports. Every change is measured before it ships.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="docs">
+        <div class="container">
+            <div class="sec-head">
+                <span class="label">§ 03 · Docs</span>
+                <h2 class="sec-title">The written record, page by page.</h2>
+            </div>
+            <div class="kbd-grid">
+                <div class="kbd-card"><code><a href="docs/00_stack_primer/">stack primer</a></code><p>The shape of the repository — what lives where and why.</p></div>
+                <div class="kbd-card"><code><a href="docs/01_installation/">installation</a></code><p>From a clean Mac to a running local model on MLX + Chroma.</p></div>
+                <div class="kbd-card"><code><a href="docs/02_data_ingestion/">data ingestion</a></code><p>How each source is extracted, normalised, and stored with provenance.</p></div>
+                <div class="kbd-card"><code><a href="docs/03_training/">training</a></code><p>LoRA fine-tuning with MLX locally; the Axolotl path for remote training.</p></div>
+                <div class="kbd-card"><code><a href="docs/04_rag_setup/">rag setup</a></code><p>Chroma first, Qdrant on upgrade. Embeddings, chunking, re-rankers.</p></div>
+                <div class="kbd-card"><code><a href="docs/05_model_serving/">model serving</a></code><p>FastAPI orchestrator, OpenAI-compatible endpoint, adapter switching.</p></div>
+                <div class="kbd-card"><code><a href="docs/07_evaluation/">evaluation</a></code><p>Guardrail matrix, boundary cases, improvement and degradation reports.</p></div>
+                <div class="kbd-card"><code><a href="docs/09_guardrails/">guardrails</a></code><p>Scope rules, refusal logic, redirect prompts, topic router.</p></div>
+                <div class="kbd-card"><code><a href="architecture/overview/">architecture</a></code><p>The full narrative and rendered diagrams for each layer.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container inner">
+            <span class="label">§ 04 · Contact</span>
+            <h2>Model quirks, guardrail feedback, or a domain you think should be added.</h2>
+            <div class="contact-links">
+                <a class="contact-link" href="https://github.com/joanmarcriera/personal-llm" target="_blank" rel="noreferrer">
+                    <span class="k">GitHub</span>
+                    <span class="v">joanmarcriera/personal-llm</span>
+                    <span class="a">→</span>
+                </a>
+                <a class="contact-link" href="mailto:joanmarcriera@gmail.com?subject=personal-llm">
+                    <span class="k">Email</span>
+                    <span class="v">joanmarcriera@gmail.com</span>
+                    <span class="a">→</span>
+                </a>
+                <a class="contact-link" href="https://riera.co.uk/">
+                    <span class="k">Portfolio</span>
+                    <span class="v">riera.co.uk</span>
+                    <span class="a">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="chrome-footer">
+    <div class="inner">
+        <div class="foot-brand">
+            <span class="label">Colophon</span>
+            <span class="line">Joan Marc Riera Duocastella</span>
+            <span>Cambridgeshire, United Kingdom</span>
+            <span>BCS, the Chartered Institute for IT</span>
+            <span class="stamp">© 2026 · All rights reserved</span>
+        </div>
+        <div>
+            <div class="foot-family-label">Family of sites — jump anywhere</div>
+            <div class="foot-grid" id="foot-grid"></div>
+            <div class="foot-bottom">
+                <span>llm.riera.co.uk / lab</span>
+                <span class="mono">Press <strong>⌘K</strong> to open the index from any page</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Inline chrome for the landing — MkDocs build pipeline can't emit an
+// external chrome.js without extra config, so we inline the minimum.
+(function () {
+  const SITES = [
+    { id: 'hub', num: '00', url: 'riera.co.uk',     href: 'https://riera.co.uk/',     title: 'Portfolio',           desc: 'The index. Commercial entry point.',                            tag: 'index' },
+    { id: 'cv',  num: '01', url: 'cv.riera.co.uk',  href: 'https://cv.riera.co.uk/',  title: 'Curriculum vitae',    desc: 'Platform engineering profile.',                                  tag: 'career' },
+    { id: 'cxo', num: '02', url: 'cxo.riera.co.uk', href: 'https://cxo.riera.co.uk/', title: 'CTO playbook',        desc: 'Strategy and operating-model lens.',                             tag: 'strategy' },
+    { id: 'sme', num: '03', url: 'sme.riera.co.uk', href: 'https://sme.riera.co.uk/', title: 'SME automation',      desc: 'The inspectable stack behind the Automation Audit.',             tag: 'practice' },
+    { id: 'cnc', num: '04', url: 'cnc.riera.co.uk', href: 'https://cnc.riera.co.uk/', title: 'CNCraft',             desc: 'Prompt to CNC-ready output.',                                    tag: 'tool' },
+    { id: 'i2e', num: '05', url: 'i2e.riera.co.uk', href: 'https://i2e.riera.co.uk/', title: 'Image to Excalidraw', desc: 'A diagram screenshot becomes an editable scene.',                tag: 'tool' },
+    { id: 'llm', num: '06', url: 'llm.riera.co.uk', href: 'https://llm.riera.co.uk/', title: 'Personal LLM',        desc: 'Domain-specialised, local-first LLM scaffolding.',              tag: 'lab' },
+    { id: 'mac', num: '07', url: 'mac.riera.co.uk', href: 'https://mac.riera.co.uk/', title: 'Mac rebuild',         desc: 'Opinionated MacBook Pro rebuild notes.',                        tag: 'notes' }
+  ];
+  const CURRENT = 'llm';
+
+  function renderFooter() {
+    const root = document.getElementById('foot-grid');
+    if (!root) return;
+    root.innerHTML = SITES.map(function (s) {
+      return '<a class="foot-link ' + (s.id === CURRENT ? 'is-current' : '') + '" href="' + s.href + '">'
+        + '<span class="u">' + s.url + '</span>'
+        + '<span class="d">' + s.tag + '</span>'
+        + '</a>';
+    }).join('');
+  }
+  function renderSwitcher() {
+    const root = document.getElementById('switcher-list');
+    if (!root) return;
+    root.innerHTML = SITES.map(function (s) {
+      return '<a class="switch-row ' + (s.id === CURRENT ? 'is-current' : '') + '" href="' + s.href + '">'
+        + '<span class="row-num">' + s.num + '</span>'
+        + '<div class="row-body">'
+        +   '<div class="row-title">' + s.title + '</div>'
+        +   '<div class="row-desc">' + s.desc + '</div>'
+        + '</div>'
+        + '<span class="row-url">' + s.url + '</span>'
+        + '</a>';
+    }).join('');
+  }
+  function openSwitcher() {
+    const el = document.getElementById('switcher');
+    if (!el) return;
+    el.classList.add('open');
+    renderSwitcher();
+  }
+  function closeSwitcher() {
+    const el = document.getElementById('switcher');
+    if (el) el.classList.remove('open');
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    renderFooter();
+    const openBtn = document.getElementById('switcher-open');
+    if (openBtn) openBtn.addEventListener('click', openSwitcher);
+    const closeBtn = document.getElementById('switcher-close');
+    if (closeBtn) closeBtn.addEventListener('click', closeSwitcher);
+    const switcherEl = document.getElementById('switcher');
+    if (switcherEl) {
+      switcherEl.addEventListener('click', function (e) {
+        if (e.target.id === 'switcher') closeSwitcher();
+      });
+    }
+    window.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openSwitcher();
+      }
+      if (e.key === 'Escape') closeSwitcher();
+    });
+  });
+})();
+</script>
+
+</div>

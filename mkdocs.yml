@@ -7,6 +7,7 @@ use_directory_urls: true
 
 theme:
   name: material
+  custom_dir: overrides
   language: en
   features:
     - navigation.sections
@@ -42,6 +43,7 @@ markdown_extensions:
 
 extra_css:
   - docs/assets/site.css
+  - docs/assets/landing.css
 
 extra_javascript:
   - https://unpkg.com/mermaid@11/dist/mermaid.min.js

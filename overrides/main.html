@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{#
+  Conditionally replace Material's chrome + content with a fully custom
+  Portfolio System landing on the homepage. All other pages fall through
+  to the standard Material theme.
+#}
+
+{% block site_meta %}
+  {{ super() }}
+  {% if page and page.is_homepage %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#1f2436">
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% if page and page.is_homepage %}
+    <style>
+      .md-header, .md-tabs, .md-sidebar, .md-footer, .md-search, .md-skip { display: none !important; }
+      .md-main { margin: 0; }
+      .md-main__inner { max-width: none; margin: 0; padding: 0; }
+      .md-content { max-width: none; padding: 0; }
+      .md-content__inner { padding: 0; margin: 0; }
+      .md-content__inner > :last-child { margin-bottom: 0; }
+      body.js .md-header--shadow { box-shadow: none; }
+      .md-container { padding-top: 0 !important; }
+    </style>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if page and page.is_homepage %}
+    {% include "partials/llm-landing.html" %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
