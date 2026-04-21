@@ -20,6 +20,8 @@
   {{ super() }}
   {% if page and page.is_homepage %}
     <style>
+      html { font-size: 16px; }
+      body { font-size: 15.5px; }
       .md-header, .md-tabs, .md-sidebar, .md-footer, .md-search, .md-skip { display: none !important; }
       .md-main { margin: 0; }
       .md-main__inner { max-width: none; margin: 0; padding: 0; }
