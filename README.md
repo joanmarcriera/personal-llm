@@ -1,5 +1,7 @@
 # personal-llm
 
+**Live demo:** [llm.riera.co.uk](https://llm.riera.co.uk)
+
 Production-oriented scaffolding for a personal domain-specialized LLM focused on professional and technical knowledge. The repository is optimized for a MacBook Pro M4 with 48 GB RAM, with an easy-first local path using `FastAPI + MLX + Chroma` and an optional upgrade path to `Qdrant + Ollama` or `llama.cpp`.
 
 ## What this repository does
