@@ -16,7 +16,9 @@ class PolicyEngine:
     prompts: PromptLibrary = field(init=False)
 
     def __post_init__(self) -> None:
-        self.classifier = DomainClassifier(self.settings.resolve(Path("config/domain_taxonomy.yaml")))
+        self.classifier = DomainClassifier(
+            self.settings.resolve(Path("config/domain_taxonomy.yaml"))
+        )
         self.prompts = PromptLibrary(self.settings)
 
     def route_query(self, query: str) -> PolicyDecision:
@@ -43,7 +45,10 @@ class PolicyEngine:
         if classification.label == "mixed" and self.prompts.refuse_mixed_queries():
             return PolicyDecision(
                 allow=False,
-                reason="Query mixes approved and disallowed topics under the selected guardrail profile.",
+                reason=(
+                    "Query mixes approved and disallowed topics under the "
+                    "selected guardrail profile."
+                ),
                 redirect_domains=[
                     "IT infrastructure",
                     "DevOps",

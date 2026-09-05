@@ -23,8 +23,12 @@ class MatrixRow:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Benchmark guardrail profiles against one evaluation case file.")
-    parser.add_argument("--model-profile", required=True, help="Model profile from config/models.yaml")
+    parser = argparse.ArgumentParser(
+        description="Benchmark guardrail profiles against one evaluation case file."
+    )
+    parser.add_argument(
+        "--model-profile", required=True, help="Model profile from config/models.yaml"
+    )
     parser.add_argument(
         "--cases",
         default="evaluation/cases/guardrail_profile_matrix.jsonl",
@@ -70,7 +74,8 @@ def markdown_table(rows: list[MatrixRow], model_profile: str, cases_path: str) -
         f"    line [{hallucination_values}]",
         "```",
         "",
-        "| Profile | Pass Rate | Passed | Restriction | Citation | Hallucination Proxy | Domain Alignment | Failed Cases |",
+        "| Profile | Pass Rate | Passed | Restriction | Citation "
+        "| Hallucination Proxy | Domain Alignment | Failed Cases |",
         "| --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for row in rows:
@@ -91,14 +96,18 @@ def markdown_table(rows: list[MatrixRow], model_profile: str, cases_path: str) -
             "## How to read this",
             "",
             "- Use this matrix to compare guardrail behavior quickly.",
-            "- Use the full `evaluation/cases/core_eval_cases.jsonl` suite only after you pick the best candidate profile.",
-            "- `citation_coverage` and `hallucination_proxy` here are directional because the current scorer is intentionally lightweight.",
+            "- Use the full `evaluation/cases/core_eval_cases.jsonl` suite only after you pick "
+            "the best candidate profile.",
+            "- `citation_coverage` and `hallucination_proxy` here are directional because the "
+            "current scorer is intentionally lightweight.",
             "",
             "## Quick interpretation",
             "",
             "- Higher `Pass Rate`, `Restriction`, and `Domain Alignment` are better.",
-            "- Lower `Hallucination Proxy` is better, but it can also improve simply because the model refused more often.",
-            "- If `strict` lowers pass rate sharply, it is usually over-refusing mixed professional prompts.",
+            "- Lower `Hallucination Proxy` is better, but it can also improve simply because "
+            "the model refused more often.",
+            "- If `strict` lowers pass rate sharply, it is usually over-refusing "
+            "mixed professional prompts.",
         ]
     )
     return "\n".join(lines) + "\n"
@@ -108,7 +117,9 @@ def main() -> None:
     args = parse_args()
     rows: list[MatrixRow] = []
     for guardrail_profile in args.profiles:
-        settings = AppSettings(model_profile=args.model_profile, guardrail_profile=guardrail_profile)
+        settings = AppSettings(
+            model_profile=args.model_profile, guardrail_profile=guardrail_profile
+        )
         runner = EvaluationRunner(settings)
         result = runner.run(Path(args.cases))
         failed_case_ids = [str(item["id"]) for item in result.details if not bool(item["passed"])]
