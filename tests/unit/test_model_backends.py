@@ -3,8 +3,7 @@ from __future__ import annotations
 import sys
 from types import ModuleType
 
-from personal_llm.core.schemas import ModelBackend
-from personal_llm.core.schemas import ModelProfile
+from personal_llm.core.schemas import ModelBackend, ModelProfile
 from personal_llm.models.backends import MLXBackend
 
 

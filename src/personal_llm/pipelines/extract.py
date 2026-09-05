@@ -3,7 +3,6 @@ from __future__ import annotations
 import csv
 import json
 import mailbox
-import mimetypes
 from email import policy
 from email.parser import BytesParser
 from pathlib import Path
@@ -164,7 +163,10 @@ class DocumentExtractor:
             elif content_type == "text/html":
                 body_parts.append(markdownify(part.get_content()))
         if not body_parts:
-            body_parts.append(message.get_body(preferencelist=("plain", "html")).get_content() if message.get_body() else "")
+            body_parts.append(
+                message.get_body(preferencelist=("plain", "html")).get_content()
+                if message.get_body()
+                else ""
+            )
         text = "\n".join(part for part in body_parts if part).strip()
         return {"message": message, "text": text, "attachments": attachments}
-

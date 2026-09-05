@@ -16,7 +16,9 @@ class ChromaVectorStore:
     collection: object = field(init=False)
 
     def __post_init__(self) -> None:
-        self.client = chromadb.PersistentClient(path=str(self.settings.resolve(self.settings.chroma_path)))
+        self.client = chromadb.PersistentClient(
+            path=str(self.settings.resolve(self.settings.chroma_path))
+        )
         self.collection = self.client.get_or_create_collection("personal-llm")
 
     def bootstrap(self) -> None:
@@ -25,13 +27,21 @@ class ChromaVectorStore:
     def upsert(self, embeddings: list[EmbeddingRecord]) -> None:
         ids = [record.chunk_id for record in embeddings]
         documents = [str(record.metadata.get("text", "")) for record in embeddings]
-        metadatas = [record.metadata | {"domains": ",".join(record.domains)} for record in embeddings]
+        metadatas = [
+            record.metadata | {"domains": ",".join(record.domains)} for record in embeddings
+        ]
         vectors = [record.vector for record in embeddings]
-        self.collection.upsert(ids=ids, embeddings=vectors, documents=documents, metadatas=metadatas)
+        self.collection.upsert(
+            ids=ids, embeddings=vectors, documents=documents, metadatas=metadatas
+        )
 
-    def search(self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]) -> list[ChunkRecord]:
+    def search(
+        self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]
+    ) -> list[ChunkRecord]:
         where = metadata_filters or None
-        result = self.collection.query(query_embeddings=[query_vector], n_results=top_k, where=where)
+        result = self.collection.query(
+            query_embeddings=[query_vector], n_results=top_k, where=where
+        )
         chunks: list[ChunkRecord] = []
         ids = result.get("ids", [[]])[0]
         documents = result.get("documents", [[]])[0]
@@ -48,7 +58,9 @@ class ChromaVectorStore:
                     text=str(document),
                     token_estimate=int(metadata.get("token_estimate", 0)),
                     metadata=metadata,
-                    domains=str(metadata.get("domains", "")).split(",") if metadata.get("domains") else [],
+                    domains=str(metadata.get("domains", "")).split(",")
+                    if metadata.get("domains")
+                    else [],
                     classification_label=str(metadata.get("classification_label", "allowed")),
                 )
             )

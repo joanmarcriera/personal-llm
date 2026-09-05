@@ -5,7 +5,13 @@ from typing import Any
 
 from personal_llm.config.settings import AppSettings
 from personal_llm.core.schemas import ModelBackend, ModelProfile
-from personal_llm.models.backends import ChatBackend, LlamaCppBackend, MLXBackend, MockBackend, OllamaBackend
+from personal_llm.models.backends import (
+    ChatBackend,
+    LlamaCppBackend,
+    MLXBackend,
+    MockBackend,
+    OllamaBackend,
+)
 
 
 @dataclass(slots=True)
@@ -17,7 +23,9 @@ class ModelRegistry:
 
     def get_profile(self, profile_name: str | None = None) -> ModelProfile:
         config = self._config()
-        selected_name = profile_name or self.settings.model_profile or config["default_model_profile"]
+        selected_name = (
+            profile_name or self.settings.model_profile or config["default_model_profile"]
+        )
         profiles = config["profiles"]
         if selected_name not in profiles:
             raise KeyError(f"Unknown model profile: {selected_name}")

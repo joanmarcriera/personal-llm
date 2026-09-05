@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from uuid import uuid4
 
 from fastapi import FastAPI
@@ -34,7 +34,7 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
     @app.get("/health")
     async def health() -> dict[str, str]:
-        return {"status": "ok", "timestamp": datetime.now(timezone.utc).isoformat()}
+        return {"status": "ok", "timestamp": datetime.now(UTC).isoformat()}
 
     @app.get("/metrics")
     async def metrics() -> dict[str, str]:
@@ -49,7 +49,10 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
         inputs = request.input if isinstance(request.input, list) else [request.input]
         vectors = embeddings.embed_texts(inputs)
         return EmbeddingResponse(
-            data=[EmbeddingObject(embedding=vector, index=index) for index, vector in enumerate(vectors)],
+            data=[
+                EmbeddingObject(embedding=vector, index=index)
+                for index, vector in enumerate(vectors)
+            ],
             model=request.model or f"{resolved_settings.embedding_provider}-embedding",
         )
 
@@ -72,7 +75,9 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
             context_block = "\n\n".join(chunk.text for chunk in chunks)
             citations = format_citations(chunks).splitlines() if chunks else []
             system_prompt = prompts.system_prompt()
-            user_prompt = f"{query}\n\nContext:\n{context_block}\n\nCitations:\n{format_citations(chunks)}"
+            user_prompt = (
+                f"{query}\n\nContext:\n{context_block}\n\nCitations:\n{format_citations(chunks)}"
+            )
             answer = backend.generate(system_prompt=system_prompt, user_prompt=user_prompt)
         return ChatCompletionResponse(
             id=f"chatcmpl-{uuid4().hex}",

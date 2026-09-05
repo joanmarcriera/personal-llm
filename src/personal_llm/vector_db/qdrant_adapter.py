@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from uuid import NAMESPACE_URL, uuid5
-
 from dataclasses import dataclass, field
 from typing import Any
+from uuid import NAMESPACE_URL, uuid5
 
 from qdrant_client import QdrantClient
 from qdrant_client.http import models as qmodels
@@ -40,11 +39,16 @@ class QdrantVectorStore:
         ]
         self.client.upsert(collection_name=self.collection_name, points=points)
 
-    def search(self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]) -> list[ChunkRecord]:
+    def search(
+        self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]
+    ) -> list[ChunkRecord]:
         filter_obj = None
         if metadata_filters:
             filter_obj = qmodels.Filter(
-                must=[qmodels.FieldCondition(key=key, match=qmodels.MatchValue(value=value)) for key, value in metadata_filters.items()]
+                must=[
+                    qmodels.FieldCondition(key=key, match=qmodels.MatchValue(value=value))
+                    for key, value in metadata_filters.items()
+                ]
             )
         results = self.client.search(
             collection_name=self.collection_name,

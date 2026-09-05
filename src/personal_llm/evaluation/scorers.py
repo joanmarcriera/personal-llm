@@ -27,4 +27,3 @@ def score_case(case: EvalCase, answer: str, refused: bool) -> CaseScore:
         hallucination_proxy=hallucination_proxy,
         domain_alignment=domain_alignment,
     )
-

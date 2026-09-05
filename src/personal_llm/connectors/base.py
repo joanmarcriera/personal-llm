@@ -8,6 +8,6 @@ from personal_llm.core.schemas import SourceDocument
 
 
 class SourceConnector(Protocol):
-    def discover(self, settings: AppSettings, raw_dir: Path, connector_config: dict[str, object]) -> list[SourceDocument]:
-        ...
-
+    def discover(
+        self, settings: AppSettings, raw_dir: Path, connector_config: dict[str, object]
+    ) -> list[SourceDocument]: ...

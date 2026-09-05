@@ -28,11 +28,18 @@ class DomainClassifier:
         allowed_total = sum(allowed_scores.values())
         disallowed_total = sum(disallowed_scores.values()) * self.disallowed_multiplier
         allowed_ranked = sorted(allowed_scores.items(), key=lambda item: item[1], reverse=True)
-        disallowed_ranked = sorted(disallowed_scores.items(), key=lambda item: item[1], reverse=True)
+        disallowed_ranked = sorted(
+            disallowed_scores.items(), key=lambda item: item[1], reverse=True
+        )
 
         if disallowed_total > 0 and disallowed_total >= max(allowed_total, 0.01):
             label = "disallowed"
-        elif allowed_total > 0 and disallowed_total > 0 and min(allowed_total, disallowed_total) / max(allowed_total, disallowed_total) >= self.mixed_threshold:
+        elif (
+            allowed_total > 0
+            and disallowed_total > 0
+            and min(allowed_total, disallowed_total) / max(allowed_total, disallowed_total)
+            >= self.mixed_threshold
+        ):
             label = "mixed"
         elif allowed_total > 0:
             label = "allowed"
@@ -62,4 +69,3 @@ class DomainClassifier:
                 if keyword.lower() in text:
                     scores[group_name] += 1.0
         return scores
-

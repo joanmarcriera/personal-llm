@@ -37,4 +37,3 @@ def test_mlx_training_manager_generates_dataset_dir_and_config(tmp_path: Path) -
     assert generated_config.exists()
     assert '"messages"' in generated_dataset.read_text(encoding="utf-8")
     assert "Qwen/Qwen2.5-7B-Instruct" in generated_config.read_text(encoding="utf-8")
-

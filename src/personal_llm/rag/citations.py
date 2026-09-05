@@ -9,4 +9,3 @@ def format_citations(chunks: list[ChunkRecord]) -> str:
         title = str(chunk.metadata.get("title") or chunk.source_id)
         lines.append(f"[{chunk.chunk_index + 1}] {title} ({chunk.source_id})")
     return "\n".join(lines)
-

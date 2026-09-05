@@ -26,4 +26,6 @@ class Retriever:
         metadata_filters: dict[str, Any] | None = None,
     ) -> list[ChunkRecord]:
         query_vector = self.embedding_service.embed_texts([query])[0]
-        return self.vector_store.search(query_vector, top_k=top_k, metadata_filters=metadata_filters or {})
+        return self.vector_store.search(
+            query_vector, top_k=top_k, metadata_filters=metadata_filters or {}
+        )

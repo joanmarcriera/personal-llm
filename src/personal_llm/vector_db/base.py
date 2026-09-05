@@ -8,17 +8,15 @@ from personal_llm.core.schemas import ChunkRecord, EmbeddingRecord
 
 
 class VectorStore(Protocol):
-    def bootstrap(self) -> None:
-        ...
+    def bootstrap(self) -> None: ...
 
-    def upsert(self, embeddings: list[EmbeddingRecord]) -> None:
-        ...
+    def upsert(self, embeddings: list[EmbeddingRecord]) -> None: ...
 
-    def search(self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]) -> list[ChunkRecord]:
-        ...
+    def search(
+        self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]
+    ) -> list[ChunkRecord]: ...
 
-    def reset(self) -> None:
-        ...
+    def reset(self) -> None: ...
 
 
 @dataclass(slots=True)
@@ -44,7 +42,9 @@ class InMemoryVectorStore:
                 classification_label=str(record.metadata.get("classification_label", "allowed")),
             )
 
-    def search(self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]) -> list[ChunkRecord]:
+    def search(
+        self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]
+    ) -> list[ChunkRecord]:
         scored: list[tuple[float, ChunkRecord]] = []
         for chunk_id, record in self.records.items():
             score = self._cosine(query_vector, record.vector)
@@ -85,4 +85,3 @@ def build_vector_store(settings: AppSettings) -> VectorStore:
 
         return QdrantVectorStore(settings=settings)
     return InMemoryVectorStore()
-

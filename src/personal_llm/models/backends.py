@@ -10,8 +10,7 @@ from personal_llm.core.schemas import ModelProfile
 
 
 class ChatBackend(Protocol):
-    def generate(self, system_prompt: str, user_prompt: str) -> str:
-        ...
+    def generate(self, system_prompt: str, user_prompt: str) -> str: ...
 
 
 @dataclass(slots=True)

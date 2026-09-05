@@ -7,7 +7,6 @@ from datasketch import MinHash
 
 from personal_llm.core.schemas import ExtractedDocument
 
-
 TOKEN_PATTERN = re.compile(r"[a-zA-Z0-9_]+")
 
 
@@ -23,7 +22,10 @@ class DuplicateDetector:
             if document.checksum in seen_checksums:
                 continue
             signature = self._signature(document.text)
-            if any(signature.jaccard(existing) >= self.near_duplicate_threshold for _, existing in signatures):
+            if any(
+                signature.jaccard(existing) >= self.near_duplicate_threshold
+                for _, existing in signatures
+            ):
                 continue
             seen_checksums.add(document.checksum)
             accepted.append(document)
@@ -35,4 +37,3 @@ class DuplicateDetector:
         for token in TOKEN_PATTERN.findall(text.lower()):
             minhash.update(token.encode("utf-8"))
         return minhash
-

@@ -9,4 +9,3 @@ def test_policy_refuses_off_topic_query() -> None:
     decision = engine.route_query("Recommend a few blockbuster movies.")
     assert decision.allow is False
     assert "professional-domain" in decision.reason
-

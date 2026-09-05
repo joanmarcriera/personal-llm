@@ -15,5 +15,7 @@ def test_chat_completion_refuses_disallowed_query() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    assert "restricted" in payload["choices"][0]["message"]["content"] or "professional" in payload["choices"][0]["message"]["content"]
-
+    assert (
+        "restricted" in payload["choices"][0]["message"]["content"]
+        or "professional" in payload["choices"][0]["message"]["content"]
+    )
