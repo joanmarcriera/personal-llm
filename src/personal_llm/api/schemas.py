@@ -47,4 +47,3 @@ class EmbeddingResponse(BaseModel):
     object: str = "list"
     data: list[EmbeddingObject]
     model: str
-

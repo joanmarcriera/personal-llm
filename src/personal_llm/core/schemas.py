@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
-from enum import Enum
-from typing import Any, Literal
+from datetime import UTC, datetime
+from enum import StrEnum
+from typing import Any, Literal, cast
 
 from pydantic import BaseModel, Field
 
 
-class SourceType(str, Enum):
+class SourceType(StrEnum):
     LOCAL_FILE = "local_file"
     GOOGLE_DRIVE = "google_drive"
     EMAIL_EXPORT = "email_export"
@@ -17,18 +17,29 @@ class SourceType(str, Enum):
     DIAGRAM = "diagram"
 
 
-class SensitivityLabel(str, Enum):
+class SensitivityLabel(StrEnum):
     PUBLIC = "public"
     INTERNAL = "internal"
     RESTRICTED = "restricted"
     CONFIDENTIAL = "confidential"
 
 
-class ModelBackend(str, Enum):
+class ModelBackend(StrEnum):
     MLX = "mlx"
     OLLAMA = "ollama"
     LLAMA_CPP = "llama_cpp"
     MOCK = "mock"
+
+
+ClassificationLabel = Literal["allowed", "mixed", "disallowed"]
+_CLASSIFICATION_LABELS: tuple[ClassificationLabel, ...] = ("allowed", "mixed", "disallowed")
+
+
+def coerce_classification_label(
+    value: object, default: ClassificationLabel = "allowed"
+) -> ClassificationLabel:
+    """Narrow an untyped value (e.g. from YAML/DB metadata) to a known classification label."""
+    return cast(ClassificationLabel, value if value in _CLASSIFICATION_LABELS else default)
 
 
 class SourceDocument(BaseModel):
@@ -40,7 +51,7 @@ class SourceDocument(BaseModel):
     checksum: str
     metadata: dict[str, Any] = Field(default_factory=dict)
     sensitivity: SensitivityLabel = SensitivityLabel.CONFIDENTIAL
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class DomainClassification(BaseModel):
@@ -61,7 +72,7 @@ class ExtractedDocument(BaseModel):
     checksum: str
     sensitivity: SensitivityLabel = SensitivityLabel.RESTRICTED
     classification: DomainClassification | None = None
-    extracted_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    extracted_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class ChunkRecord(BaseModel):
@@ -130,4 +141,3 @@ class EvaluationResult(BaseModel):
     hallucination_proxy: float
     domain_alignment: float
     details: list[dict[str, Any]] = Field(default_factory=list)
-

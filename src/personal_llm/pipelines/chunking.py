@@ -42,4 +42,3 @@ class Chunker:
             start = max(end - self.overlap_chars, start + 1)
             index += 1
         return chunks
-

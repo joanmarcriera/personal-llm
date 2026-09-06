@@ -63,7 +63,9 @@ class MLXTrainingManager:
         if isinstance(assistant, str) and assistant:
             messages.append({"role": "assistant", "content": assistant})
         if not messages:
-            raise ValueError("Training rows must contain either 'messages' or system/user/assistant fields.")
+            raise ValueError(
+                "Training rows must contain either 'messages' or system/user/assistant fields."
+            )
         return {"messages": messages}
 
     def _write_generated_config(
@@ -92,5 +94,7 @@ class MLXTrainingManager:
                 "scale": float(mlx_config.get("lora_alpha", 32)),
             },
         }
-        generated_config.write_text(yaml.safe_dump(config_payload, sort_keys=False), encoding="utf-8")
+        generated_config.write_text(
+            yaml.safe_dump(config_payload, sort_keys=False), encoding="utf-8"
+        )
         return generated_config

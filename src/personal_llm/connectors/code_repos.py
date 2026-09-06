@@ -6,7 +6,6 @@ from personal_llm.config.settings import AppSettings
 from personal_llm.core.io import materialize_raw_copy, sha256_file
 from personal_llm.core.schemas import SourceDocument, SourceType
 
-
 INTERESTING_FILENAMES = {"Dockerfile", "Makefile", "README.md"}
 INTERESTING_SUFFIXES = {".md", ".py", ".tf", ".yaml", ".yml", ".json", ".toml", ".sh"}
 

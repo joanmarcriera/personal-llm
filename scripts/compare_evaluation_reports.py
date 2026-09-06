@@ -58,26 +58,35 @@ def case_pass_map(report: dict[str, Any]) -> dict[str, bool]:
 
 def build_deltas(before: dict[str, Any], after: dict[str, Any]) -> list[MetricDelta]:
     return [
-        MetricDelta("pass_rate", pass_rate(before), pass_rate(after), pass_rate(after) - pass_rate(before), True),
+        MetricDelta(
+            "pass_rate",
+            pass_rate(before),
+            pass_rate(after),
+            pass_rate(after) - pass_rate(before),
+            True,
+        ),
         MetricDelta(
             "restriction_compliance",
             float(before.get("restriction_compliance", 0.0)),
             float(after.get("restriction_compliance", 0.0)),
-            float(after.get("restriction_compliance", 0.0)) - float(before.get("restriction_compliance", 0.0)),
+            float(after.get("restriction_compliance", 0.0))
+            - float(before.get("restriction_compliance", 0.0)),
             True,
         ),
         MetricDelta(
             "citation_coverage",
             float(before.get("citation_coverage", 0.0)),
             float(after.get("citation_coverage", 0.0)),
-            float(after.get("citation_coverage", 0.0)) - float(before.get("citation_coverage", 0.0)),
+            float(after.get("citation_coverage", 0.0))
+            - float(before.get("citation_coverage", 0.0)),
             True,
         ),
         MetricDelta(
             "hallucination_proxy",
             float(before.get("hallucination_proxy", 0.0)),
             float(after.get("hallucination_proxy", 0.0)),
-            float(after.get("hallucination_proxy", 0.0)) - float(before.get("hallucination_proxy", 0.0)),
+            float(after.get("hallucination_proxy", 0.0))
+            - float(before.get("hallucination_proxy", 0.0)),
             False,
         ),
         MetricDelta(
@@ -90,13 +99,19 @@ def build_deltas(before: dict[str, Any], after: dict[str, Any]) -> list[MetricDe
     ]
 
 
-def build_case_sets(before: dict[str, Any], after: dict[str, Any]) -> tuple[list[str], list[str], list[str]]:
+def build_case_sets(
+    before: dict[str, Any], after: dict[str, Any]
+) -> tuple[list[str], list[str], list[str]]:
     before_map = case_pass_map(before)
     after_map = case_pass_map(after)
     common_ids = sorted(set(before_map) & set(after_map))
     improved = [case_id for case_id in common_ids if not before_map[case_id] and after_map[case_id]]
-    regressed = [case_id for case_id in common_ids if before_map[case_id] and not after_map[case_id]]
-    stable_failures = [case_id for case_id in common_ids if not before_map[case_id] and not after_map[case_id]]
+    regressed = [
+        case_id for case_id in common_ids if before_map[case_id] and not after_map[case_id]
+    ]
+    stable_failures = [
+        case_id for case_id in common_ids if not before_map[case_id] and not after_map[case_id]
+    ]
     return improved, regressed, stable_failures
 
 
@@ -115,7 +130,13 @@ def render_markdown(
     regressed: list[str],
     stable_failures: list[str],
 ) -> str:
-    metric_names = ['"Pass Rate"', '"Restriction"', '"Citation"', '"Hallucination Proxy"', '"Domain Alignment"']
+    metric_names = [
+        '"Pass Rate"',
+        '"Restriction"',
+        '"Citation"',
+        '"Hallucination Proxy"',
+        '"Domain Alignment"',
+    ]
     before_values = ", ".join(f"{delta.before:.3f}" for delta in deltas)
     after_values = ", ".join(f"{delta.after:.3f}" for delta in deltas)
     lines = [
@@ -146,7 +167,8 @@ def render_markdown(
     ]
     for delta in deltas:
         lines.append(
-            f"| {delta.name} | {delta.before:.3f} | {delta.after:.3f} | {delta.delta:+.3f} | {delta_word(delta)} |"
+            f"| {delta.name} | {delta.before:.3f} | {delta.after:.3f} | "
+            f"{delta.delta:+.3f} | {delta_word(delta)} |"
         )
     lines.extend(
         [
@@ -159,9 +181,12 @@ def render_markdown(
             "",
             "## Reading guide",
             "",
-            "- A real improvement should raise `pass_rate` and preserve or improve `restriction_compliance`.",
-            "- If `hallucination_proxy` drops only because the model refuses more, treat that as suspicious rather than automatically better.",
-            "- Regressed cases matter more than average deltas when they are in hard-refusal or regulated-domain prompts.",
+            "- A real improvement should raise `pass_rate` and preserve or improve "
+            "`restriction_compliance`.",
+            "- If `hallucination_proxy` drops only because the model refuses more, treat "
+            "that as suspicious rather than automatically better.",
+            "- Regressed cases matter more than average deltas when they are in "
+            "hard-refusal or regulated-domain prompts.",
         ]
     )
     return "\n".join(lines) + "\n"
@@ -175,10 +200,14 @@ def main() -> None:
     after = load_report(after_path)
     deltas = build_deltas(before, after)
     improved, regressed, stable_failures = build_case_sets(before, after)
-    markdown = render_markdown(before_path, after_path, deltas, improved, regressed, stable_failures)
+    markdown = render_markdown(
+        before_path, after_path, deltas, improved, regressed, stable_failures
+    )
     output_prefix = Path(args.output_prefix)
     output_prefix.parent.mkdir(parents=True, exist_ok=True)
-    markdown_path = output_prefix.with_name(f"{output_prefix.name}_{before_path.stem}_vs_{after_path.stem}.md")
+    markdown_path = output_prefix.with_name(
+        f"{output_prefix.name}_{before_path.stem}_vs_{after_path.stem}.md"
+    )
     markdown_path.write_text(markdown, encoding="utf-8")
     print(markdown)
     print(f"Comparison report: {markdown_path}")

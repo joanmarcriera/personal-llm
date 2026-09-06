@@ -47,12 +47,26 @@ def test_orchestrator_can_process_fixture_corpus(tmp_path: Path) -> None:
             encoding="utf-8",
         )
     fixture_files = {
-        "tests/fixtures/markdown/sample.md": "# Platform Notes\nTerraform and Kubernetes underpin the delivery platform.",
-        "tests/fixtures/html/sample.html": "<html><body><h1>IAM</h1><p>OIDC and SCIM reduce provisioning drift.</p></body></html>",
+        "tests/fixtures/markdown/sample.md": (
+            "# Platform Notes\nTerraform and Kubernetes underpin the delivery platform."
+        ),
+        "tests/fixtures/html/sample.html": (
+            "<html><body><h1>IAM</h1><p>OIDC and SCIM reduce provisioning drift.</p></body></html>"
+        ),
         "tests/fixtures/spreadsheets/sample.csv": "metric,value\nmrr,12000\nburn,8000\n",
-        "tests/fixtures/linkwarden/export.json": '{"links":[{"name":"Solar note","url":"https://example.com","description":"Tariff optimisation","textContent":"Battery tariffs and inverter constraints matter."}]}',
-        "tests/fixtures/code/README.md": "# Infra Repo\nGitHub Actions deploy Terraform to staging and production.\n",
-        "tests/fixtures/email/sample.mbox": "From nobody@example.com Fri Jan  1 00:00:00 2026\nSubject: Incident review\nFrom: ops@example.com\nTo: team@example.com\n\nWe updated our Kubernetes ingress and rotated certificates.\n",
+        "tests/fixtures/linkwarden/export.json": (
+            '{"links":[{"name":"Solar note","url":"https://example.com",'
+            '"description":"Tariff optimisation",'
+            '"textContent":"Battery tariffs and inverter constraints matter."}]}'
+        ),
+        "tests/fixtures/code/README.md": (
+            "# Infra Repo\nGitHub Actions deploy Terraform to staging and production.\n"
+        ),
+        "tests/fixtures/email/sample.mbox": (
+            "From nobody@example.com Fri Jan  1 00:00:00 2026\n"
+            "Subject: Incident review\nFrom: ops@example.com\nTo: team@example.com\n\n"
+            "We updated our Kubernetes ingress and rotated certificates.\n"
+        ),
     }
     for relative, content in fixture_files.items():
         destination = settings.home / relative

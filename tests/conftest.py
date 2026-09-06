@@ -9,4 +9,3 @@ os.environ.setdefault("PERSONAL_LLM_EMBEDDING_PROVIDER", "hash")
 from personal_llm.config.settings import get_settings  # noqa: E402
 
 get_settings.cache_clear()
-

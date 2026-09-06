@@ -18,8 +18,14 @@ class DatasetBuilder:
         for chunk in chunks:
             if chunk.classification_label == "disallowed":
                 continue
-            user_prompt = f"Use the following professional context to answer a question about {', '.join(chunk.domains) or 'professional operations'}."
-            assistant_prompt = f"{chunk.text}\n\nRespond with a concise, evidence-aware explanation and cite the source context."
+            domains = ", ".join(chunk.domains) or "professional operations"
+            user_prompt = (
+                f"Use the following professional context to answer a question about {domains}."
+            )
+            assistant_prompt = (
+                f"{chunk.text}\n\nRespond with a concise, evidence-aware explanation "
+                "and cite the source context."
+            )
             examples.append(
                 TrainingExample(
                     id=f"sft::{chunk.id}",

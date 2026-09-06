@@ -29,9 +29,9 @@ def _orchestrator() -> PipelineOrchestrator:
 
 @app.command()
 def ingest(
-    config: Annotated[Path, typer.Option("--config", exists=True, file_okay=True, dir_okay=False)] = Path(
-        "config/sources.yaml"
-    ),
+    config: Annotated[
+        Path, typer.Option("--config", exists=True, file_okay=True, dir_okay=False)
+    ] = Path("config/sources.yaml"),
 ) -> None:
     orchestrator = _orchestrator()
     sources = orchestrator.sync_sources(config_path=config)
@@ -93,7 +93,9 @@ def evaluate(
 @app.command("train-local-mlx")
 def train_local_mlx(
     config: Annotated[Path, typer.Option("--config", exists=True)] = Path("config/training.yaml"),
-    dataset: Annotated[Path | None, typer.Option("--dataset", file_okay=True, dir_okay=False)] = None,
+    dataset: Annotated[
+        Path | None, typer.Option("--dataset", file_okay=True, dir_okay=False)
+    ] = None,
     dry_run: Annotated[bool, typer.Option("--dry-run")] = True,
 ) -> None:
     manager = MLXTrainingManager(settings=_settings())
@@ -104,7 +106,9 @@ def train_local_mlx(
 @app.command("train-remote-runpod")
 def train_remote_runpod(
     config: Annotated[Path, typer.Option("--config", exists=True)] = Path("config/training.yaml"),
-    dataset: Annotated[Path | None, typer.Option("--dataset", file_okay=True, dir_okay=False)] = None,
+    dataset: Annotated[
+        Path | None, typer.Option("--dataset", file_okay=True, dir_okay=False)
+    ] = None,
     submit: Annotated[bool, typer.Option("--submit")] = False,
 ) -> None:
     manager = RunPodTrainingManager(settings=_settings())
@@ -122,7 +126,9 @@ def serve(
     settings.host = host
     settings.port = port
     if reload:
-        uvicorn.run("personal_llm.api.app:create_app", factory=True, host=host, port=port, reload=True)
+        uvicorn.run(
+            "personal_llm.api.app:create_app", factory=True, host=host, port=port, reload=True
+        )
         return
     uvicorn.run(create_app(settings=settings), host=host, port=port)
 
@@ -133,4 +139,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

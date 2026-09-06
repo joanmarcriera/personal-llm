@@ -4,21 +4,19 @@ from dataclasses import dataclass, field
 from typing import Any, Protocol
 
 from personal_llm.config.settings import AppSettings
-from personal_llm.core.schemas import ChunkRecord, EmbeddingRecord
+from personal_llm.core.schemas import ChunkRecord, EmbeddingRecord, coerce_classification_label
 
 
 class VectorStore(Protocol):
-    def bootstrap(self) -> None:
-        ...
+    def bootstrap(self) -> None: ...
 
-    def upsert(self, embeddings: list[EmbeddingRecord]) -> None:
-        ...
+    def upsert(self, embeddings: list[EmbeddingRecord]) -> None: ...
 
-    def search(self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]) -> list[ChunkRecord]:
-        ...
+    def search(
+        self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]
+    ) -> list[ChunkRecord]: ...
 
-    def reset(self) -> None:
-        ...
+    def reset(self) -> None: ...
 
 
 @dataclass(slots=True)
@@ -41,10 +39,14 @@ class InMemoryVectorStore:
                 token_estimate=int(record.metadata.get("token_estimate", 0)),
                 metadata=record.metadata,
                 domains=record.domains,
-                classification_label=str(record.metadata.get("classification_label", "allowed")),
+                classification_label=coerce_classification_label(
+                    record.metadata.get("classification_label")
+                ),
             )
 
-    def search(self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]) -> list[ChunkRecord]:
+    def search(
+        self, query_vector: list[float], top_k: int, metadata_filters: dict[str, Any]
+    ) -> list[ChunkRecord]:
         scored: list[tuple[float, ChunkRecord]] = []
         for chunk_id, record in self.records.items():
             score = self._cosine(query_vector, record.vector)
@@ -85,4 +87,3 @@ def build_vector_store(settings: AppSettings) -> VectorStore:
 
         return QdrantVectorStore(settings=settings)
     return InMemoryVectorStore()
-

@@ -6,8 +6,12 @@ from pathlib import Path
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Archive evaluation/reports/latest.json under a stable name.")
-    parser.add_argument("--label", required=True, help="Short label like baseline_3b_standard or post_lora_run_001")
+    parser = argparse.ArgumentParser(
+        description="Archive evaluation/reports/latest.json under a stable name."
+    )
+    parser.add_argument(
+        "--label", required=True, help="Short label like baseline_3b_standard or post_lora_run_001"
+    )
     parser.add_argument(
         "--source",
         default="evaluation/reports/latest.json",

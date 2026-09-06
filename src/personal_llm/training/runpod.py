@@ -4,7 +4,7 @@ import json
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import httpx
 
@@ -15,10 +15,14 @@ from personal_llm.config.settings import AppSettings
 class RunPodTrainingManager:
     settings: AppSettings
 
-    def run(self, config_path: Path, dataset_path: Path | None, submit: bool = False) -> dict[str, Any]:
+    def run(
+        self, config_path: Path, dataset_path: Path | None, submit: bool = False
+    ) -> dict[str, Any]:
         config = self.settings.load_yaml(config_path)
         remote = config.get("remote", {})
-        dataset = self.settings.resolve(dataset_path or config.get("default_dataset", "data/training/example_sft.jsonl"))
+        dataset = self.settings.resolve(
+            dataset_path or config.get("default_dataset", "data/training/example_sft.jsonl")
+        )
         bundle = self.package_job(dataset, config_path)
         spec = self.build_job_spec(bundle, remote)
         result = {"bundle": str(bundle), "job_spec": spec}
@@ -31,14 +35,19 @@ class RunPodTrainingManager:
         with tarfile.open(bundle_path, "w:gz") as archive:
             archive.add(dataset_path, arcname="dataset.jsonl")
             archive.add(self.settings.resolve(config_path), arcname="training.yaml")
-            archive.add(self.settings.resolve(Path("scripts/runpod_entrypoint.sh")), arcname="runpod_entrypoint.sh")
+            archive.add(
+                self.settings.resolve(Path("scripts/runpod_entrypoint.sh")),
+                arcname="runpod_entrypoint.sh",
+            )
         return bundle_path
 
     def build_job_spec(self, bundle_path: Path, remote_config: dict[str, Any]) -> dict[str, Any]:
         return {
             "name": "personal-llm-lora",
             "imageName": remote_config.get("container_image", "axolotlai/axolotl:main-latest"),
-            "gpuType": remote_config.get("gpu_recommendations", {}).get("seven_b", "L4 or A10G 24 GB class"),
+            "gpuType": remote_config.get("gpu_recommendations", {}).get(
+                "seven_b", "L4 or A10G 24 GB class"
+            ),
             "upload_bundle": str(bundle_path),
             "workspace_dir": remote_config.get("upload_dir", "/workspace/personal-llm-job"),
             "output_dir": remote_config.get("output_dir", "/workspace/output"),
@@ -63,9 +72,13 @@ class RunPodTrainingManager:
                   }
                 }
             """,
-            "variables": {"input": {"templateId": self.settings.runpod_template_id, "dockerArgs": json.dumps(spec)}},
+            "variables": {
+                "input": {
+                    "templateId": self.settings.runpod_template_id,
+                    "dockerArgs": json.dumps(spec),
+                }
+            },
         }
         response = client.post("", json=payload)
         response.raise_for_status()
-        return response.json()
-
+        return cast("dict[str, Any]", response.json())

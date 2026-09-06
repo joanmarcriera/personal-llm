@@ -11,7 +11,9 @@ from personal_llm.training.runpod import RunPodTrainingManager
 def main() -> None:
     settings = get_settings()
     manager = RunPodTrainingManager(settings=settings)
-    result = manager.run(config_path=settings.resolve("config/training.yaml"), dataset_path=None, submit=False)
+    result = manager.run(
+        config_path=settings.resolve("config/training.yaml"), dataset_path=None, submit=False
+    )
     sys.stdout.write(json.dumps(result, indent=2) + "\n")
 
 
