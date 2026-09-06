@@ -6,7 +6,7 @@ from typing import Any
 
 import yaml
 
-from personal_llm.core.schemas import DomainClassification
+from personal_llm.core.schemas import ClassificationLabel, DomainClassification
 
 
 class DomainClassifier:
@@ -32,6 +32,7 @@ class DomainClassifier:
             disallowed_scores.items(), key=lambda item: item[1], reverse=True
         )
 
+        label: ClassificationLabel
         if disallowed_total > 0 and disallowed_total >= max(allowed_total, 0.01):
             label = "disallowed"
         elif (

@@ -104,7 +104,26 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 plugins = []
 
+# Third-party libraries below ship no inline types and no stub package on PyPI;
+# ignore_missing_imports is mypy's documented way to handle that, scoped per module
+# rather than relaxing strict mode globally.
+[[tool.mypy.overrides]]
+module = [
+  "datasketch",
+  "google_auth_oauthlib.*",
+  "googleapiclient.*",
+  "mlx_lm",
+  "llama_cpp",
+]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 minversion = "8.0"
 addopts = "-ra"
 testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pandas-stubs>=3.0.5.260730",
+    "types-pyyaml>=6.0.12.20260906",
+]

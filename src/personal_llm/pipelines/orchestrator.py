@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from personal_llm.config.settings import AppSettings
+from personal_llm.connectors.base import SourceConnector
 from personal_llm.connectors.code_repos import CodeRepositoryConnector
 from personal_llm.connectors.email import EmailConnector
 from personal_llm.connectors.google_drive import GoogleDriveConnector
@@ -25,7 +26,7 @@ from personal_llm.pipelines.domain_classifier import DomainClassifier
 from personal_llm.pipelines.extract import DocumentExtractor
 from personal_llm.prompts.loader import PromptLibrary
 from personal_llm.rag.embeddings import EmbeddingService
-from personal_llm.vector_db.base import build_vector_store
+from personal_llm.vector_db.base import VectorStore, build_vector_store
 
 
 @dataclass(slots=True)
@@ -38,7 +39,7 @@ class PipelineOrchestrator:
     prompt_library: PromptLibrary = field(init=False)
     dataset_builder: DatasetBuilder = field(init=False)
     embedding_service: EmbeddingService = field(init=False)
-    vector_store: object = field(init=False)
+    vector_store: VectorStore = field(init=False)
     source_manifest_path: Path = field(init=False)
     documents_manifest_path: Path = field(init=False)
     chunks_manifest_path: Path = field(init=False)
@@ -70,7 +71,7 @@ class PipelineOrchestrator:
         connectors = config.get("connectors", {})
         raw_dir = ensure_directory(self.settings.resolve(defaults.get("raw_dir", "data/raw")))
 
-        connector_objects = {
+        connector_objects: dict[str, SourceConnector] = {
             "local_files": LocalFilesConnector(),
             "code_repositories": CodeRepositoryConnector(),
             "google_drive": GoogleDriveConnector(),

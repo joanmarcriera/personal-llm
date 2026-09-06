@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from enum import StrEnum
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 from pydantic import BaseModel, Field
 
@@ -29,6 +29,17 @@ class ModelBackend(StrEnum):
     OLLAMA = "ollama"
     LLAMA_CPP = "llama_cpp"
     MOCK = "mock"
+
+
+ClassificationLabel = Literal["allowed", "mixed", "disallowed"]
+_CLASSIFICATION_LABELS: tuple[ClassificationLabel, ...] = ("allowed", "mixed", "disallowed")
+
+
+def coerce_classification_label(
+    value: object, default: ClassificationLabel = "allowed"
+) -> ClassificationLabel:
+    """Narrow an untyped value (e.g. from YAML/DB metadata) to a known classification label."""
+    return cast(ClassificationLabel, value if value in _CLASSIFICATION_LABELS else default)
 
 
 class SourceDocument(BaseModel):

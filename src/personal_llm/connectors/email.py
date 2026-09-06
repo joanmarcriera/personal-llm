@@ -107,7 +107,10 @@ class EmailConnector:
             fetch_status, fetch_data = client.fetch(message_id, "(RFC822)")
             if fetch_status != "OK":
                 continue
-            raw_message = fetch_data[0][1]
+            first_item = fetch_data[0]
+            if not isinstance(first_item, tuple):
+                continue
+            raw_message = first_item[1]
             if not isinstance(raw_message, bytes):
                 continue
             filename = f"{folder}-{message_id.decode('utf-8')}.eml"

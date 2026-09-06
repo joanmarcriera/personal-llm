@@ -8,7 +8,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.http import models as qmodels
 
 from personal_llm.config.settings import AppSettings
-from personal_llm.core.schemas import ChunkRecord, EmbeddingRecord
+from personal_llm.core.schemas import ChunkRecord, EmbeddingRecord, coerce_classification_label
 
 
 @dataclass(slots=True)
@@ -50,26 +50,31 @@ class QdrantVectorStore:
                     for key, value in metadata_filters.items()
                 ]
             )
-        results = self.client.search(
+        response = self.client.query_points(
             collection_name=self.collection_name,
-            query_vector=query_vector,
+            query=query_vector,
             limit=top_k,
             query_filter=filter_obj,
         )
-        return [
-            ChunkRecord(
-                id=str(hit.payload.get("chunk_id", hit.id)),
-                document_id=str(hit.payload.get("document_id", hit.id)),
-                source_id=str(hit.payload.get("source_id", "unknown")),
-                chunk_index=int(hit.payload.get("chunk_index", 0)),
-                text=str(hit.payload.get("text", "")),
-                token_estimate=int(hit.payload.get("token_estimate", 0)),
-                metadata=dict(hit.payload),
-                domains=list(hit.payload.get("domains", [])),
-                classification_label=str(hit.payload.get("classification_label", "allowed")),
+        chunks: list[ChunkRecord] = []
+        for hit in response.points:
+            payload = hit.payload or {}
+            chunks.append(
+                ChunkRecord(
+                    id=str(payload.get("chunk_id", hit.id)),
+                    document_id=str(payload.get("document_id", hit.id)),
+                    source_id=str(payload.get("source_id", "unknown")),
+                    chunk_index=int(payload.get("chunk_index", 0)),
+                    text=str(payload.get("text", "")),
+                    token_estimate=int(payload.get("token_estimate", 0)),
+                    metadata=dict(payload),
+                    domains=list(payload.get("domains", [])),
+                    classification_label=coerce_classification_label(
+                        payload.get("classification_label")
+                    ),
+                )
             )
-            for hit in results
-        ]
+        return chunks
 
     def reset(self) -> None:
         if self.client.collection_exists(self.collection_name):

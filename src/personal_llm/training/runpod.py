@@ -4,7 +4,7 @@ import json
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import httpx
 
@@ -81,4 +81,4 @@ class RunPodTrainingManager:
         }
         response = client.post("", json=payload)
         response.raise_for_status()
-        return response.json()
+        return cast("dict[str, Any]", response.json())

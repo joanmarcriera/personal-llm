@@ -14,9 +14,10 @@ class LocalFilesConnector:
         raw_dir: Path,
         connector_config: dict[str, object],
     ) -> list[SourceDocument]:
+        raw_extensions = connector_config.get("include_extensions", [])
         include_extensions = {
             ext.lower()
-            for ext in connector_config.get("include_extensions", [])
+            for ext in (raw_extensions if isinstance(raw_extensions, list) else [])
             if isinstance(ext, str)
         }
         paths = connector_config.get("paths", [])

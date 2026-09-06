@@ -25,7 +25,9 @@ class GoogleDriveConnector:
         secret_path = settings.resolve(settings.google_drive_client_secret)
         credentials: Credentials | None = None
         if token_path.exists():
-            credentials = Credentials.from_authorized_user_file(str(token_path), scope)
+            credentials = Credentials.from_authorized_user_file(  # type: ignore[no-untyped-call]
+                str(token_path), scope
+            )
         if credentials is None or not credentials.valid:
             flow = InstalledAppFlow.from_client_secrets_file(str(secret_path), scope)
             credentials = flow.run_local_server(port=0)
